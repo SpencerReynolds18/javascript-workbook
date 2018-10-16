@@ -11,9 +11,86 @@ const rl = readline.createInterface({
 function rockPaperScissors(hand1, hand2) {
 
   // Write code here
+//hand 1 enters their weapon, hand 2 enters their weapon - This is done
+
+if(typeof(hand1)=='string' && typeof(hand2)=='string'){
+} else {
+console.log('Invalid entry, please choose rock, paper, or scissors')
+}
+//making sure the hands entered are strings
+
+
+if (hand1 != 'rock' && hand1 != 'paper' && hand1 != 'scissors'){
+  console.log('Invalid entry from player 1, please choose rock, paper, or scissors')
+}
+//making sure hand1 is rock, paper, or scissors
+
+if (hand2 != 'rock' && hand2 != 'paper' && hand2 != 'scissors'){
+  console.log('Invalid entry from player 2, please choose rock, paper, or scissors')
+}
+//making sure hand2 is rock, paper, or scissors
+
+if(hand1==hand2){
+  console.log("It's a tie!")
+}
+//checking for the tie first to narrow the cases
+
+if (hand1 == 'rock' && hand2 == "paper"){
+  console.log("Hand two wins!")
+}
+
+if (hand1 == 'rock' && hand2 == "scissors"){
+  console.log("Hand one wins!")
+}
+
+if (hand1 == 'paper' && hand2 == "rock"){
+  console.log("Hand one wins!")
+}
+
+if (hand1 == 'paper' && hand2 == "scissors"){
+  console.log("Hand two wins!")
+}
+
+if (hand1 == 'scissors' && hand2 == "rock"){
+  console.log("Hand two wins!")
+}
+
+if (hand1 == 'scissors' && hand2 == "paper"){
+  console.log("Hand one wins!")
+}
+//covering the last 6 cases with individual if statements
+
+
+
+//could I group the cases into a variable?
+//const handOneWon
+//const tieGame
+//const handTwoWon
+
+
+
+//there are 9 different combinations of hands, 3 cases
+//rock,rock - case 1 - tie
+//rock, paper - case 3 -  Hand 2 wins
+//rock, scissors - case 2 - hand 1 wins
+//paper, paper - case 1
+//paper, rock - case 2
+//paper, scissors - case 3
+//scissors, scissors - case 1
+//scissors, rock - case 3
+//scissors, paper - case 2
+
+//check to see if the moves are valid???
+//clean up moves
+//check to see if weapons are equal, if so show tie, else go to next check
+//determine who was the winner of that combination
+//print which person was the winner
 
 }
 
+
+
+//DONT TOUCH ANYTHING BELOW
 function getPrompt() {
   rl.question('hand1: ', (answer1) => {
     rl.question('hand2: ', (answer2) => {
