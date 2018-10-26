@@ -5,10 +5,13 @@ const listOfOlympians = ['Phelps', 'Biles', 'Jose', 'Spencer', 'Katie']
 
 
 const printListOfOlympians = (arr) =>{
-    arr.forEach(logIt(arr) {
-        console.log(arr);
+    arr.forEach(item => {
+        console.log(item);
     });
 }
 printListOfOlympians(listOfOlympians);
 
-change 2, second commit
+
+// arr.forEach((item,index)=> {
+//     console.log(item)
+// })
