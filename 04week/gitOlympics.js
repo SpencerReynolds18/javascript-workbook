@@ -11,4 +11,4 @@ const printListOfOlympians = (arr) =>{
 }
 printListOfOlympians(listOfOlympians);
 
-change 1, second commit
+change 2, second commit
