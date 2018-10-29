@@ -39,6 +39,18 @@ function towersOfHanoi(startStack, endStack) {
 
 }
 
+//whiteboard notes
+// check for valid inputs by type
+// check for legal move by comparison of disc size (should this happen here or later once I am working with arrays?)
+// will probably need to convert the object into arrays then use for.Each on that
+// each move will be popping and adding items from one array to another
+// check for legal move by comparison of disc size
+// 
+// Check for win
+// if a win, return some win message and reset the board
+// else recreate stacks as an object and display to the user, return and prompt for another move.
+
+
 function getPrompt() {
   printStacks();
   rl.question('start stack: ', (startStack) => {
