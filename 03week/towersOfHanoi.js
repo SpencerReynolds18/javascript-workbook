@@ -19,25 +19,39 @@ function printStacks() {
     console.log("c: " + stacks.c);
 }
 
-function towersOfHanoi(startStack, endStack) {
-    // Your code here
-    movePiece(startStack, endStack);
 
-    checkForWin(startStack, endStack);
-}
 
 function isLegal(startStack, endStack) {
     // Your code here
-    // const startStackLower = startStack.toLowerCase();
-    // const endStackLower = endStack.toLowerCase();
+    const startStackLower = startStack.toLowerCase();
+    const endStackLower = endStack.toLowerCase();
 
+    const validInputs = ['a', 'b', 'c'];
+
+    if (!validInputs.includes(startStackLower) || !validInputs.includes(endStackLower)) {
+        console.log('Invalid entry, please choose a, b, or c to identify the start stack and end stack of your move.');
+        return false;
+    }
+
+    if (stacks[startStackLower].length == 0){
+        console.log('Invalid entry, please choose a start stack that has discs in it.');
+        return false;
+    }
+
+    if (stacks[endStackLower].length == 0){
+        return true;
+    }
+
+    if ((stacks[startStackLower][stacks[startStackLower].length-1]) > (stacks[endStackLower][stacks[endStackLower].length-1])){
+        console.log('Invalid entry, you cannot place a larger disc on top of a smaller disc. Please make a valid move.');
+        return false;
+    }
+    return true;
 }
 
 
 
 function movePiece(startStack, endStack) {
-
-    isLegal(startStack, endStack);
 
     const lastItemStartStack = stacks[startStack].pop();
     stacks[endStack].push(lastItemStartStack);
@@ -72,17 +86,25 @@ function checkForWin(startStack, endStack) {
     // Next method is checking to see if other stacks are empty - will only work if my rules for stacking are solid.
     if (stacks.a.length == 0 && (stacks.b.length == 0 || stacks.c.length == 0)) {
         console.log("You win! Can you do it again in fewer moves?");
-        let stacks = {
+        stacks = {
             a: [4, 3, 2, 1],
             b: [],
             c: []
         };
-        printStacks();
     }
 
 }
 
+function towersOfHanoi(startStack, endStack) {
+    // Your code here
 
+    if (isLegal(startStack, endStack)){
+        movePiece(startStack, endStack);
+    }
+
+
+    checkForWin(startStack, endStack);
+}
 
 
 
