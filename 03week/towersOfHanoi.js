@@ -21,11 +21,8 @@ function printStacks() {
 
 
 
-function isLegal(startStack, endStack) {
+function isLegal(startStackLower,endStackLower) {
     // Your code here
-    const startStackLower = startStack.toLowerCase();
-    const endStackLower = endStack.toLowerCase();
-
     const validInputs = ['a', 'b', 'c'];
 
     if (!validInputs.includes(startStackLower) || !validInputs.includes(endStackLower)) {
@@ -40,9 +37,13 @@ function isLegal(startStack, endStack) {
 
     if (stacks[endStackLower].length == 0) {
         return true;
+        //need to return true here so that the next portion doesn't run in a scenario where the end stack is empty.
     }
-
-    if ((stacks[startStackLower][stacks[startStackLower].length - 1]) > (stacks[endStackLower][stacks[endStackLower].length - 1])) {
+    const arrOfStartStackLower = stacks[startStackLower];
+    const indexOfLastElementStart = arrOfStartStackLower.length - 1;
+    const arrOfEndStackLower = stacks[endStackLower];
+    const indexOfLastElementEnd = arrOfEndStackLower.length - 1;
+    if ((arrOfStartStackLower[indexOfLastElementStart]) > (arrOfEndStackLower[indexOfLastElementEnd])) {
         console.log('Invalid entry, you cannot place a larger disc on top of a smaller disc. Please make a valid move.');
         return false;
     }
@@ -51,16 +52,16 @@ function isLegal(startStack, endStack) {
 
 
 
-function movePiece(startStack, endStack) {
+function movePiece(startStackLower,endStackLower) {
 
-    const lastItemStartStack = stacks[startStack].pop();
-    stacks[endStack].push(lastItemStartStack);
+    const lastItemStartStack = stacks[startStackLower].pop();
+    stacks[endStackLower].push(lastItemStartStack);
 
     //two steps here, popping the last item off of the specified array, adding it to the specified array.
     //I could then recompose the board, or include that in the check for win step.
 }
 
-function checkForWin(startStack, endStack) {
+function checkForWin(startStackLower,endStackLower) {
     //Your code here
 
     //first method I tried - checking to see if b or c is equal to the expected winning array.
@@ -85,28 +86,30 @@ function checkForWin(startStack, endStack) {
 
     // Next method is checking to see if other stacks are empty - will only work if my rules for stacking are solid.
     if (stacks.a.length == 0 && (stacks.b.length == 0 || stacks.c.length == 0)) {
-        console.log("You win! Can you do it again in fewer moves?");
+        printStacks();
+        console.log("You win! Can you do it again in fewer moves? Resetting board...");
         stacks = {
             a: [4, 3, 2, 1],
             b: [],
             c: []
         };
+        return true;
+    } else {
+        return false;
     }
 
 }
 
-function towersOfHanoi(startStack, endStack) {
+function towersOfHanoi(startStack,endStack) {
     // Your code here
+    const startStackLower = startStack.toLowerCase();
+    const endStackLower = endStack.toLowerCase();
 
-    if (isLegal(startStack, endStack)) {
-        movePiece(startStack, endStack);
+    if (isLegal(startStackLower, endStackLower)) {
+        movePiece(startStackLower, endStackLower);
     }
-
-
-    checkForWin(startStack, endStack);
+    checkForWin(startStackLower, endStackLower);
 }
-
-
 
 
 //whiteboard notes
@@ -156,13 +159,13 @@ if (typeof describe === 'function') {
             };
             assert.equal(isLegal('a', 'b'), false);
         });
-        it('should not allow numbers as inputs', () => {
+        it('should not allow numbers as inputs - all inputs through the terminal are characters', () => {
             stacks = {
                 a: [4, 3, 2],
                 b: [1],
                 c: []
             };
-            assert.equal(isLegal('8', 9), false);
+            assert.equal(isLegal('8', '9'), false);
         });
         it('should not allow invalid letters as inputs', () => {
             stacks = {
