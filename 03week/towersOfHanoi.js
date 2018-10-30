@@ -21,15 +21,15 @@ function printStacks() {
 
 
 
-function isLegal(startStackLower,endStackLower) {
+function isLegal(startStackLower, endStackLower) {
     // Your code here
     const validInputs = ['a', 'b', 'c'];
-
+    //if the inputs are not a, b, or c throw an error.
     if (!validInputs.includes(startStackLower) || !validInputs.includes(endStackLower)) {
         console.log('Invalid entry, please choose a, b, or c to identify the start stack and end stack of your move.');
         return false;
     }
-
+    //if they choose an empty stack, throw an error.
     if (stacks[startStackLower].length == 0) {
         console.log('Invalid entry, please choose a start stack that has discs in it.');
         return false;
@@ -52,7 +52,7 @@ function isLegal(startStackLower,endStackLower) {
 
 
 
-function movePiece(startStackLower,endStackLower) {
+function movePiece(startStackLower, endStackLower) {
 
     const lastItemStartStack = stacks[startStackLower].pop();
     stacks[endStackLower].push(lastItemStartStack);
@@ -61,7 +61,7 @@ function movePiece(startStackLower,endStackLower) {
     //I could then recompose the board, or include that in the check for win step.
 }
 
-function checkForWin(startStackLower,endStackLower) {
+function checkForWin(startStackLower, endStackLower) {
     //Your code here
 
     //first method I tried - checking to see if b or c is equal to the expected winning array.
@@ -86,8 +86,10 @@ function checkForWin(startStackLower,endStackLower) {
 
     // Next method is checking to see if other stacks are empty - will only work if my rules for stacking are solid.
     if (stacks.a.length == 0 && (stacks.b.length == 0 || stacks.c.length == 0)) {
+        //printing to show the winning scenario on the board before resetting the board and reprinting.
         printStacks();
         console.log("You win! Can you do it again in fewer moves? Resetting the stacks...");
+        //setting the stacks equal to the starting config if the player has won.
         stacks = {
             a: [4, 3, 2, 1],
             b: [],
@@ -100,11 +102,12 @@ function checkForWin(startStackLower,endStackLower) {
 
 }
 
-function towersOfHanoi(startStack,endStack) {
+function towersOfHanoi(startStack, endStack) {
     // Your code here
+    //cleaning up the inputs by forcing them to lower case where they can be pulled into other functions.
     const startStackLower = startStack.toLowerCase();
     const endStackLower = endStack.toLowerCase();
-
+    // If the inputs are legal, move the piece then check for a win before starting another turn.
     if (isLegal(startStackLower, endStackLower)) {
         movePiece(startStackLower, endStackLower);
     }
