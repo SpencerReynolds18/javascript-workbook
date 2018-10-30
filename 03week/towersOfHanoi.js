@@ -87,7 +87,7 @@ function checkForWin(startStackLower,endStackLower) {
     // Next method is checking to see if other stacks are empty - will only work if my rules for stacking are solid.
     if (stacks.a.length == 0 && (stacks.b.length == 0 || stacks.c.length == 0)) {
         printStacks();
-        console.log("You win! Can you do it again in fewer moves? Resetting board...");
+        console.log("You win! Can you do it again in fewer moves? Resetting the stacks...");
         stacks = {
             a: [4, 3, 2, 1],
             b: [],
