@@ -28,8 +28,7 @@ function pigLatin(word) {
 //need a method to throw an error if they enter anything other than arrayVowels or arrayConsonants
     for (let i = 0 ; i<splitWordArray.length; i++) {
         if (!allLetters.includes(splitWordArray[i])) {
-          console.log('Invalid entry, please choose a word. Numbers and special characters are not allowed.');
-          return;
+          return console.log('Invalid entry, please choose a word. Numbers and special characters are not allowed.');
         }
     }
           //should ask someone about best practices of leaving a blank if, and a filled else
@@ -44,9 +43,9 @@ function pigLatin(word) {
     //went with the array and used the includes function to determine if vowel.
 
     if (arrayVowels.includes(splitWordArray[0])) {
-        console.log(wordLower + 'way')
+        return console.log(wordLower + 'way')
     } else {
-        var vowelLocation = null;
+        const vowelLocation = null;
         for (let i = 1; i<splitWordArray.length; i++) {
             if (arrayVowels.includes(splitWordArray[i])) {
                 vowelLocation = i;
@@ -54,10 +53,9 @@ function pigLatin(word) {
             }
         }
         if (vowelLocation) {
-            console.log(wordLower.substr(vowelLocation) + wordLower.substr(0, vowelLocation) + 'ay')
+            return console.log(wordLower.substr(vowelLocation) + wordLower.substr(0, vowelLocation) + 'ay')
         } else {
-            console.log("Please enter a word... not just a consonant catastrope");
-            return;
+            return console.log("Please enter a word... not just a consonant catastrope");
         }
     }
 
