@@ -16,42 +16,53 @@ class CrewMember {
         this.name = name;
         this.job = job;
         this.specialSkill = specialSkill;
-        this.ship = ship;
+        this.ship = null;
     }
 
-    // printOutName = () => {
-    //     console.log(this.name)
-    // }
-    //
+    printOutName(){
+        console.log(this.name)
+      }
+
     enterShip(ship){
-        this.ship = ship;
         ship.crew.push(this.name);
     }
 }
 let crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
 let crewMember2 = new CrewMember('Commander Lewis', 'commander', 'geology');
 
-// crewMember1.enterShip(mav);
+// crewMember1.printOutName();
 
 class Ship {
     constructor(name, type, ability, crew) {
         this.name = name;
         this.type = type;
         this.ability = ability;
-        this.crew = crew;
+        this.crew = [];
     }
 
-    // printOutName = () => {
-    //     console.log(this.name)
+    // missionStatement(ship){
+    //     if(this.crew.length>0){
+    //         return console.log(ship.ability);
+    //     } else{
+    //         return console.log("Can't perform a mission yet.");
+    //     }
     // }
-    //
-    // assignToTeam = (transformerTeam) => {
-    //     this.transformerTeam = transformerTeam;
-    //     transformerTeam.crew.push(this.name);
-    // }
+
 }
 let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
 let hermes = new Ship('Hermes', 'Main Ship', 'Interplanetary Space Travel');
+
+
+crewMember1.enterShip(mav);
+//
+// mav.missionStatement()
+// //
+//
+// crewMember2.enterShip(hermes);
+//
+// hermes.missionStatement()
+
+
 
 //tests
 if (typeof describe === 'function') {
