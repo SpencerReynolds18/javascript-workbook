@@ -24,13 +24,14 @@ class CrewMember {
       }
 
     enterShip(ship){
-        ship.crew.push(this.name);
+        this.ship = ship;
+        ship.crew.push(this);
     }
 }
 let crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
 let crewMember2 = new CrewMember('Commander Lewis', 'commander', 'geology');
 
-// crewMember1.printOutName();
+crewMember1.printOutName();
 
 class Ship {
     constructor(name, type, ability, crew) {
@@ -40,13 +41,13 @@ class Ship {
         this.crew = [];
     }
 
-    // missionStatement(ship){
-    //     if(this.crew.length>0){
-    //         return console.log(ship.ability);
-    //     } else{
-    //         return console.log("Can't perform a mission yet.");
-    //     }
-    // }
+    missionStatement(ship){
+        if(ship.crew.length>0){
+            return console.log(ship.ability);
+        } else{
+            return console.log("Can't perform a mission yet.");
+        }
+    }
 
 }
 let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
@@ -54,6 +55,9 @@ let hermes = new Ship('Hermes', 'Main Ship', 'Interplanetary Space Travel');
 
 
 crewMember1.enterShip(mav);
+console.log(mav.crew);
+
+console.log(crewMember1.ship);
 //
 // mav.missionStatement()
 // //
