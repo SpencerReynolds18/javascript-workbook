@@ -13,13 +13,13 @@ let jobTypes = {
 //need a class template for crew members with the appropriate characteristics
 class CrewMember {
     constructor(name, job, specialSkill, ship) {
-        this.name = name;
-        this.job = job;
-        this.specialSkill = specialSkill;
-        this.ship = null;
-    }
-//need a function here to add crew members to ships
-    enterShip(ship){
+            this.name = name;
+            this.job = job;
+            this.specialSkill = specialSkill;
+            this.ship = null;
+        }
+        //need a function here to add crew members to ships
+    enterShip(ship) {
         this.ship = ship;
         ship.crew.push(this);
     }
@@ -31,16 +31,16 @@ let crewMember2 = new CrewMember('Commander Lewis', 'commander', 'geology');
 //need a class template for ships with the appropriate characteristics
 class Ship {
     constructor(name, type, ability, crew) {
-        this.name = name;
-        this.type = type;
-        this.ability = ability;
-        this.crew = [];
-    }
-//need a function here that changes the mission statement once crew members are on the ship
-    missionStatement(){
-        if(this.crew.length>0){
+            this.name = name;
+            this.type = type;
+            this.ability = ability;
+            this.crew = [];
+        }
+        //need a function here that changes the mission statement once crew members are on the ship
+    missionStatement() {
+        if (this.crew.length > 0) {
             return this.ability;
-        } else{
+        } else {
             return "Can't perform a mission yet.";
         }
     }
