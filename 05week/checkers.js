@@ -34,6 +34,7 @@ function checker(whichPiece, toWhere) {
 class Board {
     constructor() {
             this.grid = [];
+            //adding in this (below)
             this.checkers = [];
         }
         // method that creates an 8x8 array, filled with null values
@@ -53,8 +54,8 @@ class Board {
         this.grid[5] = ['r', null, 'r', null, 'r', null, 'r', null];
         this.grid[6] = [null, 'r', null, 'r', null, 'r', null, 'r'];
         this.grid[7] = ['r', null, 'r', null, 'r', null, 'r', null];
-        //I am adding the above code
         this.updateCheckers();
+        //I am adding the above code
     }
     viewGrid() {
             // add our column numbers
@@ -87,13 +88,16 @@ class Board {
         const arrWhichPiece = whichPiece.split('');
         const arrToWhere = toWhere.split('');
 
-
-        //Checking for Valid moves
+        //Checking for Valid inputs
         const validInputs = ['0', '1', '2', '3', '4', '5', '6', '7']
         for (let i = 0; i < 2; i++) {
             if (!validInputs.includes(arrWhichPiece[i]) || !validInputs.includes(arrToWhere[i])) {
-                return console.log('Invalid entry, please choose row and column values between 0 and 7');
+                return console.log('Invalid entry, please choose row and column values between 0 and 7.');
             }
+        }
+
+        if (arrWhichPiece.length!=2 || arrToWhere.length!=2){
+            return console.log('Invalid entry, "Which piece?" and "To where?" each require 2 digit entries');
         }
 
         //Red can only move red pieces
@@ -102,12 +106,36 @@ class Board {
             this.grid[arrWhichPiece[0]][arrWhichPiece[1]] != 'R') {
             return console.log("It is red's turn, you must select a red piece on the board to move.");
         }
-        // // //black can only move black pieces
+        //black can only move black pieces
         if (playerTurn === 'black' &&
             this.grid[arrWhichPiece[0]][arrWhichPiece[1]] != 'b' &&
             this.grid[arrWhichPiece[0]][arrWhichPiece[1]] != 'B') {
             return console.log("It is black's turn, you must select a black piece on the board to move.");
         }
+
+//this should check to see if a piece is moving within normal parameters, but is missing the columns values on a jump.
+        // if ((this.grid[arrWhichPiece[0]][arrWhichPiece[1]] == 'r') &&
+        //     ((arrToWhere[0]-arrWhichPiece[0]!= -1 && arrToWhere[0]-arrWhichPiece[0] != -2) ||
+        //     (arrToWhere[1]-arrWhichPiece[1]!= 1 && arrToWhere[1]-arrWhichPiece[1] != -1)) ){
+        //     return console.log("Pieces can only move diagonally toward the enemy.");
+        // }
+
+        if (Math.abs(arrToWhere[0]-arrWhichPiece[0])!= Math.abs(arrToWhere[1]-arrWhichPiece[1])){
+            return console.log("Pieces can only move diagonally.");
+        }
+
+
+//first attempt to indicate square is occupied
+        // if (this.grid[arrToWhere[0]][arrToWhere[1]] != 'r' || this.grid[arrToWhere[0]][arrToWhere[1]] == 'R' ||
+        //     this.grid[arrToWhere[0]][arrToWhere[1]] == 'b' || this.grid[arrToWhere[0]][arrToWhere[1]] == 'B'){
+        //     return console.log("This square is occupied, you must move to an empty square or jump an enemy to an empty square.");
+        // }
+
+        if (this.grid[arrToWhere[0]][arrToWhere[1]] != null){
+            return console.log("This square is occupied, you must move to an empty square or jump an enemy to an empty square.");
+        }
+
+
         //red pieces can only move diagonally up left/right or jump up left or right
         //arrToWhere must eqaul row-1 and column +or- 1 for normal moves
         //arrToWhere must equal row-2 anc column +or- 2 for a kill. remove the enemy piece, (stretch goal)prompt another turn if another killable piece available.
@@ -132,9 +160,9 @@ class Board {
         //merging the array of arrays into one array
         this.updateCheckers();
         //taking the new big array and removing the null values for an easy .length count of the remaining pieces.
-
         // console.log(game.board.checkers.length);
         //method to check the number of peices left on the board.
+
         //switching the player turn
         if (playerTurn == 'red') {
             playerTurn = 'black';
