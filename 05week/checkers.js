@@ -29,6 +29,8 @@ let playerTurn = "red";
 function checker(whichPiece, toWhere) {
     // Your code here
     game.moveChecker(whichPiece, toWhere);
+
+    //things to add 1.check for win 2.upgrade to king R/B 3.Double jumps
 }
 
 class Board {
@@ -85,18 +87,19 @@ class Board {
         // Your code here
 
     moveChecker(whichPiece, toWhere) {
-        const arrWhichPiece = whichPiece.split('');
-        const arrToWhere = toWhere.split('');
+        const arrWhichPiece = whichPiece.split('').map(x => parseInt(x));
+        const arrToWhere = toWhere.split('').map(x => parseInt(x));
+
 
         //Checking for Valid inputs
-        const validInputs = ['0', '1', '2', '3', '4', '5', '6', '7']
+        const validInputs = [0, 1, 2, 3, 4, 5, 6, 7]
         for (let i = 0; i < 2; i++) {
             if (!validInputs.includes(arrWhichPiece[i]) || !validInputs.includes(arrToWhere[i])) {
                 return console.log('Invalid entry, please choose row and column values between 0 and 7.');
             }
         }
 
-        if (arrWhichPiece.length!=2 || arrToWhere.length!=2){
+        if (arrWhichPiece.length != 2 || arrToWhere.length != 2) {
             return console.log('Invalid entry, "Which piece?" and "To where?" each require 2 digit entries');
         }
 
@@ -113,29 +116,65 @@ class Board {
             return console.log("It is black's turn, you must select a black piece on the board to move.");
         }
 
-//this should check to see if a piece is moving within normal parameters, but is missing the columns values on a jump.
+        //this should check to see if a piece is moving within normal parameters, but is missing the columns values on a jump.
         // if ((this.grid[arrWhichPiece[0]][arrWhichPiece[1]] == 'r') &&
         //     ((arrToWhere[0]-arrWhichPiece[0]!= -1 && arrToWhere[0]-arrWhichPiece[0] != -2) ||
         //     (arrToWhere[1]-arrWhichPiece[1]!= 1 && arrToWhere[1]-arrWhichPiece[1] != -1)) ){
         //     return console.log("Pieces can only move diagonally toward the enemy.");
         // }
 
-        if (Math.abs(arrToWhere[0]-arrWhichPiece[0])!= Math.abs(arrToWhere[1]-arrWhichPiece[1])){
+        //checks to make sure moves are diagonal
+        if (Math.abs(arrToWhere[0] - arrWhichPiece[0]) != Math.abs(arrToWhere[1] - arrWhichPiece[1])) {
             return console.log("Pieces can only move diagonally.");
         }
 
+        //checks to make sure moves are either a move into an empty space or a jump
+        if (Math.abs(arrToWhere[0] - arrWhichPiece[0]) > 2 || Math.abs(arrToWhere[1] - arrWhichPiece[1]) > 2) {
+            return console.log("Pieces can only move diagonally into an empty space or jump an enemy into an empty space.");
+        }
+        //only allows moving diagonally 2 if the first space is occupied by the other color. This is the crux of the kill.
 
-//first attempt to indicate square is occupied
+        //first attempt to indicate square is occupied
         // if (this.grid[arrToWhere[0]][arrToWhere[1]] != 'r' || this.grid[arrToWhere[0]][arrToWhere[1]] == 'R' ||
         //     this.grid[arrToWhere[0]][arrToWhere[1]] == 'b' || this.grid[arrToWhere[0]][arrToWhere[1]] == 'B'){
         //     return console.log("This square is occupied, you must move to an empty square or jump an enemy to an empty square.");
         // }
-
-        if (this.grid[arrToWhere[0]][arrToWhere[1]] != null){
+        //Better way to check if square is occupied
+        if (this.grid[arrToWhere[0]][arrToWhere[1]] != null) {
             return console.log("This square is occupied, you must move to an empty square or jump an enemy to an empty square.");
         }
 
+        if(Math.abs(arrToWhere[0] - arrWhichPiece[0]) == 2 && playerTurn=='red'){
+            if ((this.grid[arrWhichPiece[0]][arrWhichPiece[1]] == 'r') &&
+                (arrToWhere[0] - arrWhichPiece[0] == -2) &&
+                (this.grid[(arrWhichPiece[0] + arrToWhere[0]) / 2][(arrWhichPiece[1] + arrToWhere[1]) / 2] == 'b')) {
+                this.grid[((arrWhichPiece[0] + arrToWhere[0]) / 2)][((arrWhichPiece[1] + arrToWhere[1]) / 2)] = null;
+            } else {
+                return console.log("Pieces can only move one space diagonally unless they are jumping over and killing an enemy piece.");
+            }
+        }
 
+        if(Math.abs(arrToWhere[0] - arrWhichPiece[0]) == 2 && playerTurn=='black'){
+            if ((this.grid[arrWhichPiece[0]][arrWhichPiece[1]] == 'b') &&
+                (arrToWhere[0] - arrWhichPiece[0] == 2) &&
+                (this.grid[(arrWhichPiece[0] + arrToWhere[0]) / 2][(arrWhichPiece[1] + arrToWhere[1]) / 2] == 'r')) {
+                this.grid[((arrWhichPiece[0] + arrToWhere[0]) / 2)][((arrWhichPiece[1] + arrToWhere[1]) / 2)] = null;
+            } else {
+                return console.log("Pieces can only move one space diagonally unless they are jumping over and killing an enemy piece.");
+            }
+        }
+
+            // if ((this.grid[arrWhichPiece[0]][arrWhichPiece[1]] == 'r') &&
+            //     (arrToWhere[0] - arrWhichPiece[0] < -1) &&
+            //     (this.grid[(arrWhichPiece[0] + arrToWhere[0]) / 2][(arrWhichPiece[1] + arrToWhere[1]) / 2] == 'b')) {
+            //     return console.log("Pieces can only move one space diagonally unless they are jumping over and killing an enemy piece.");
+            // } else {
+            //     this.grid[((arrWhichPiece[0] + arrToWhere[0]) / 2)][((arrWhichPiece[1] + arrToWhere[1]) / 2)] = null;
+            //     return
+            // }
+
+
+//whiteboard notes
         //red pieces can only move diagonally up left/right or jump up left or right
         //arrToWhere must eqaul row-1 and column +or- 1 for normal moves
         //arrToWhere must equal row-2 anc column +or- 2 for a kill. remove the enemy piece, (stretch goal)prompt another turn if another killable piece available.
