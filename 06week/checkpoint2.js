@@ -106,14 +106,14 @@ const weather = [{
 
 const weatherStateName = [];
 weather.map(function(item, index) {
-    if(!weatherStateName.includes(item.weather_state_name)){
+    if (!weatherStateName.includes(item.weather_state_name)) {
         return weatherStateName.push(item.weather_state_name)
     }
 });
 console.log(weatherStateName);
-    //
-    // //find the id of the object in weather that has a min_temp of 15.915
-    //
+//
+// //find the id of the object in weather that has a min_temp of 15.915
+//
 const idealTemp = weather.find(item => item.min_temp == 15.915);
 // console.log(idealTemp);
 console.log(idealTemp.id);
