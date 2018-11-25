@@ -27,9 +27,9 @@ function add(a, b) {
 console.log(sumEvens);
 
 // Find the index of the first "Austin" value (the value plus its index equals 512)
-const atxIdx = nums.find(function(item, index) {
-    if (item + index == 512) {
-        return index
+const atxIdx = nums.findIndex(function(value, index) {
+    if (value + index == 512) {
+        return true
     }
 });
 
@@ -106,8 +106,9 @@ const weather = [{
 
 const weatherStateName = [];
 weather.map(function(item, index) {
-    const weatherStates = [];
-    return weatherStateName.push(weather[index].weather_state_name)
+    if(!weatherStateName.includes(item.weather_state_name)){
+        return weatherStateName.push(item.weather_state_name)
+    }
 });
 console.log(weatherStateName);
     //
@@ -117,3 +118,6 @@ const idealTemp = weather.find(item => item.min_temp == 15.915);
 // console.log(idealTemp);
 console.log(idealTemp.id);
 // `
+// const idealTemp = weather.find(item => item.min_temp == 15.915);
+// // console.log(idealTemp);
+// console.log(idealTemp.id);
